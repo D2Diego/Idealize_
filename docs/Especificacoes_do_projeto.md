@@ -45,40 +45,213 @@
 
 ## ✅ Requisitos Funcionais
 
-| ID     | Descrição Detalhada                                                                                                                        | Prioridade |
-|--------|---------------------------------------------------------------------------------------------------------------------------------------------|------------|
-| RF-001 | **Formulário de Contato / Onboarding**  
-Permitir que potenciais clientes preencham formulário (nome, e-mail, empresa, telefone) para abertura de conta e disparo de fluxo comercial. | Alta       |
-| RF-002 | **Cadastro Simplificado de Empresas**  
-Cadastrar e gerenciar dados da empresa (nome, CNPJ, endereço, faturamento mensal, responsáveis financeiros).                                    | Alta       |
-| RF-003 | **Tela de Login e Autenticação**  
-Autenticar usuários por e-mail/usuário e senha, com recuperação de senha via e-mail.                                                            | Alta       |
-| RF-004 | **Dashboard Financeiro**  
-Exibir indicadores-chave:  
-  - Fluxo de caixa histórico vs. projetado  
-  - Clientes inadimplentes  
-  - Saldo atual e futuro  
-  - Recebimentos e pagamentos futuros programados  
-  - Prazo médio de recebimento/pagamento  
-  - Churn rate e risco de concentração de clientes  
-  - Detalhamento de despesas operacionais categorizadas  
-Cada card deve ter ícone “ℹ️” com fórmula e definição.                  | Alta       |
-| RF-005 | **Contas a Receber**  
-Importar planilha Excel com histórico; inclusão manual de lançamentos futuros; gerenciamento de status (pendente/recebido/atrasado).         | Alta       |
-| RF-006 | **Contas a Pagar**  
-Importar planilha Excel com histórico; inclusão manual de lançamentos futuros; gerenciamento de status (pendente/pago/atrasado).             | Alta       |
-| RF-007 | **Geração de Relatórios Contábeis**  
-Gerar e exportar relatórios formatados (PDF, Excel) com base em período selecionado, prontos para envio à contabilidade.                         | Alta       |
-| RF-008 | **Notificações e Alertas**  
-Disparar alertas automáticos via interface (e opcionalmente e-mail) para: vencimentos de contas, pagamentos atrasados, inadimplências críticas e saldo baixo projetado. | Média      |
-| RF-009 | **Gestão de Usuários e Permissões**  
-Criar/editar usuários, controlar níveis de acesso e habilitar cobrança adicional por usuário extra (controle de licenças).                        | Média      |
-| RF-010 | **Perfil & Configurações Pessoais**  
-Permitir que cada usuário edite seus dados de perfil, altere senha e configure notificações.                                                    | Média      |
-| RF-011 | **Ajuda & Suporte Integrado**  
-Disponibilizar sessão de FAQ e formulário de contato interno para suporte, registro de tickets ou envio de dúvidas.                                | Baixa      |
-| RF-012 | **Auditoria e Histórico de Ações**  
-Manter log de operações críticas (login/logout, importação de dados, geração de relatórios, alterações de usuário) para auditoria futura.         | Baixa      |
+# 📚 Requisitos Funcionais Detalhados — Idealize Capital
+
+## 1. Onboarding e Cadastro Inicial
+
+### RF-001 — Formulário de Contato e Onboarding
+
+- Usuário preenche nome, e-mail, empresa, telefone.
+- Após submissão, o sistema envia um e-mail para o comercial.
+- Usuário é orientado a importar os arquivos iniciais:
+    - **Inputs Contas a Receber.xlsx**
+    - **Inputs Contas a Pagar.xlsx**
+- Cada arquivo deve conter os seguintes campos:
+
+#### Contas a Receber
+
+- Nome do cliente
+- CNPJ ou CPF
+- Recorrente (sim/não)
+- Data de emissão
+- Data de vencimento
+- Valor a receber (R$)
+
+#### Contas a Pagar
+
+- Natureza da despesa (Impostos, Ocupação, Pessoal, Administrativas, Financeiras, Comerciais)
+- Recorrente (sim/não)
+- Data de emissão
+- Data de pagamento
+- Valor a pagar (R$)
+
+- Upload deve validar estrutura dos arquivos e indicar campos obrigatórios/faltantes.
+- Após importação, usuário segue para a próxima etapa do onboarding.
+
+---
+
+## 2. Autenticação e Gestão de Usuários
+
+### RF-002 — Tela de Login
+
+- Autenticação via e-mail/usuário e senha.
+- Opção de recuperação de senha por e-mail.
+- Mensagens claras de erro/sucesso.
+
+### RF-003 — Gestão de Usuários
+
+- Permitir cadastro de múltiplos usuários por empresa.
+- Cada usuário com perfil (**Sócio/Diretor**, **Financeiro**, **Analista Externo**, **Investidor**).
+- Controle de permissões:
+    - **Sócio/Diretor**: acesso total
+    - **Financeiro**: inserir/editar/excluir lançamentos, visualizar dashboards
+    - **Analista externo**: visualizar/exportar relatórios, sem acesso a dashboards
+    - **Investidor**: visualizar dashboards resumidos
+- Permitir upgrade (compra) de licenças de usuário adicional.
+- Logar responsável por cada ação (quem criou, editou, removeu, exportou, etc).
+
+### RF-004 — Perfil e Configurações Pessoais
+
+- Permitir edição de nome, e-mail, senha e configurações de notificação.
+- Exibição do perfil ativo no sistema.
+
+---
+
+## 3. Importação e Gestão de Dados Financeiros
+
+### RF-005 — Importação de Planilhas
+
+- Upload de planilhas de contas a receber/pagar, com validação de estrutura e campos obrigatórios.
+- Aceitar atualização de dados via novo upload (sobrescreve ou adiciona dados, conforme opção do usuário).
+- Possibilidade de integração futura com API de ERP.
+
+### RF-006 — Gestão Manual de Lançamentos
+
+- Permitir inclusão, edição e exclusão manual de lançamentos:
+    - **Contas a receber**: todos os campos da planilha
+    - **Contas a pagar**: todos os campos da planilha
+- Registro do responsável por cada ação.
+
+### RF-007 — Status dos Lançamentos
+
+- Controle de status:
+    - **Contas a receber**: pendente, recebido, atrasado
+    - **Contas a pagar**: pendente, pago, atrasado
+- Alteração manual ou automática (ex: lançamento com data passada e sem baixa vira “atrasado”).
+
+---
+
+## 4. Dashboard Financeiro e Indicadores
+
+### RF-008 — Dashboard Principal
+
+- Exibir cards de indicadores-chave:
+    - Fluxo de caixa histórico vs projetado
+    - Clientes inadimplentes
+    - Saldo atual e futuro
+    - Recebimentos e pagamentos futuros programados
+    - Prazo médio de recebimento/pagamento
+    - Churn rate
+    - Risco de concentração de clientes
+    - Despesas operacionais categorizadas
+- Cada card deve ter ícone “ℹ️” mostrando:
+    - Fórmula de cálculo
+    - Definição do indicador
+- Possibilitar filtro por:
+    - Período (mês, trimestre, 6 meses, ano)
+    - Cliente
+    - Natureza de despesa
+    - Status (inadimplente, em aberto, recebido, pago, atrasado)
+
+### RF-009 — Detalhamento das Despesas
+
+- Listagem e gráficos de despesas agrupadas por categoria:
+    - Impostos (PIS, COFINS, ISS, ICMS, IPI, IRPJ, CSLL)
+    - Ocupação (Energia, Água, etc.)
+    - Pessoal
+    - Administrativas
+    - Financeiras
+    - Comerciais
+
+### RF-010 — Filtros Avançados
+
+- Filtro multi-período, multi-cliente, multi-natureza, com possibilidade de salvar filtros favoritos para uso recorrente.
+
+---
+
+## 5. Relatórios e Exportações
+
+### RF-011 — Geração e Exportação de Relatórios
+
+- Exportar dados (planilhas, gráficos, tabelas) em Excel e PDF.
+- Relatórios possíveis:
+    - Fluxo de caixa
+    - DRE simplificado
+    - Contas a receber
+    - Contas a pagar
+- Relatórios devem conter:
+    - Título e subtítulo
+    - Período analisado
+    - Filtros aplicados
+    - Cabeçalho com nomes das colunas
+    - Rodapé com data/hora da exportação e usuário responsável
+
+### RF-012 — Histórico de Exportações
+
+- Registrar toda exportação realizada (data/hora, usuário, tipo de relatório).
+
+---
+
+## 6. Alertas e Notificações
+
+### RF-013 — Alertas Automáticos
+
+- Alertas configuráveis para:
+    - Contas vencidas
+    - Saldo projetado insuficiente
+    - Churn rate elevado
+    - Concentração de receita fora do padrão
+    - Contas a pagar não baixadas
+- Opções de recebimento: interface (banner/notificação interna), e-mail.
+
+### RF-014 — Configuração de Alertas
+
+- Usuário pode ativar/desativar tipos de alertas.
+- Definir thresholds personalizados por tipo de alerta (ex: saldo mínimo, % churn rate, % concentração de receita).
+
+---
+
+## 7. Auditoria, Suporte e Ajuda
+
+### RF-015 — Histórico de Ações e Auditoria
+
+- Registrar ações críticas:
+    - Login/logout
+    - Importação de dados
+    - Exclusão e edição de lançamentos
+    - Geração e exportação de relatórios
+    - Gerenciamento de usuários
+
+### RF-016 — Ajuda e Suporte
+
+- FAQ consultável e formulário de contato/suporte.
+- Registro de tickets com resposta pelo sistema e por e-mail.
+
+---
+
+## 8. Fluxo de Usuário
+
+**Onboarding:**
+- Cadastro → Upload dos arquivos iniciais → Validação → Criação dos usuários → Configuração inicial.
+
+**Operação:**
+- Visualização de dashboards → Gestão manual de lançamentos → Geração de relatórios → Configuração de alertas → Exportações.
+
+**Gestão:**
+- Adição/remover usuários, ajuste de permissões, visualização de logs de auditoria.
+
+**Suporte:**
+- Consulta de dúvidas, abertura de chamados, registro de feedback.
+
+---
+
+## 📝 Observações e Regras de Negócio Importantes
+
+- Perfis de usuário devem ser respeitados em todos os fluxos, impedindo acesso a dashboards sensíveis por analistas externos.
+- Logs devem registrar usuário, data/hora e tipo de operação para toda ação relevante.
+- Importação de dados deve ser amigável, com mensagens de erro detalhadas para auxiliar o usuário a corrigir planilhas.
+- Dashboard e relatórios devem usar os mesmos critérios de cálculo e filtros que as planilhas, garantindo consistência.
+- Planos e licenças: Limitar funcionalidades ou número de usuários conforme plano contratado, com mensagens informando o limite e possibilidade de upgrade.
 
 ---
 
